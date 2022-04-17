@@ -2,7 +2,7 @@
 /build
 /client/node_modules
 dev.js
-
+/uploads
 
 
 .DS_Store
