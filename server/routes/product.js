@@ -45,12 +45,19 @@ router.post('/',(req, res) => {
 router.post('/products',(req, res) => {
  
     // product collection 에 들어 있는 모든 상품 정보를 가져오기
+    let limit =req.body.limit ? parseInt(req.body.limit) : 20; //있으면 int로 바꾸고 없으면 20
+    let skip=req.body.skip ? parseInt(req.body.skip) : 0;
 
     Product.find()
     .populate("writer") // 이 사람에 대한 모든 정보 가져옴
+    .skip(skip)
+    .limit(limit)
     .exec((err, productInfo)=>{
         if(err) return res.status(400).json({success:false,err})
-        return res.status(200).json({success:true,productInfo})
+
+        return res.status(200).json({success:true,productInfo,
+        PostSize:productInfo.length
+    })
     })
 });
   
